@@ -1,0 +1,77 @@
+import React, { useState } from "react";
+import "../styles/login.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; 
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusType, setStatusType] = useState(""); // "error" or "success"
+  const navigate = useNavigate(); 
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (email === "test@example.com" && password === "password") {
+      setStatusType("success");
+      setStatusMessage("Login successful!");
+    } else {
+      setStatusType("error");
+      setStatusMessage("Invalid credentials. Please try again.");
+    }
+  };
+
+  return (
+    <>
+      <div className="login-container">
+        <form className="login-form" onSubmit={handleLogin}>
+          <h2>Login</h2>
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <div className="password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          {statusMessage && (
+            <p className={`status-message ${statusType}`}>
+              {statusMessage}
+            </p>
+          )}
+
+          <button type="submit" className="login-btn">Login</button>
+
+          <button
+            type="button"
+            className="register-btn"
+            onClick={() => navigate('/register')}
+          >
+            Register
+          </button>
+        </form>
+      </div>
+
+      <div className="login-footer">
+        <p>📘 Practice English from beginner to advanced level — learn through AI-powered games and tools!</p>
+      </div>
+    </>
+  );
+};
+
+export default Login;

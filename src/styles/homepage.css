@@ -1,0 +1,156 @@
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9); 
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.animate-text {
+  animation: fadeInScale 1.5s ease-out forwards;
+}
+
+
+.animate-text-delay {
+  animation: fadeInScale 1.5s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+
+@keyframes plinkEffect {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.animate-plink {
+  animation: plinkEffect 1s ease-out forwards;
+}
+
+
+@keyframes shadowPulse {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+}
+
+
+.animate-plink-shadow {
+  animation: plinkEffect 1s ease-out forwards, shadowPulse 2s infinite;
+}
+
+
+.hero {
+  background: linear-gradient(135deg, #1a202c, #2d3748, #4a5568); 
+}
+
+
+button {
+  transition: all 0.3s ease;
+}
+
+
+button.bg-gradient-to-r {
+  background: linear-gradient(135deg, #3182ce, #6b46c1);
+}
+
+button.bg-gradient-to-r:hover {
+  background: linear-gradient(135deg, #ecc94b, #f6ad55);
+}
+
+
+button.bg-transparent:hover {
+  background: #fff;
+  color: #0954d6;
+  border-color: #2d3748;
+}
+
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-left {
+  animation: slideInFromLeft 1s ease-out forwards;
+}
+
+.animate-slide-right {
+  animation: slideInFromRight 1s ease-out forwards;
+}
+
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-text {
+  opacity: 0;
+  animation: slideInLeft 1s ease-out forwards;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 1s ease-out forwards;
+}
+
+/* Optional: If you want to stagger the animation slightly */
+.animate-text:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.animate-text:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.animate-text:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.animate-text:nth-child(4) {
+  animation-delay: 0.8s;
+}

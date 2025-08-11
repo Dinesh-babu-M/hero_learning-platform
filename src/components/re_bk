@@ -1,0 +1,142 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import * as XLSX from 'xlsx';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import '../styles/login.css'; 
+
+const Register = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    city: '',
+    state: '',
+    country: ''
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (Object.values(form).some((field) => field.trim() === '')) {
+      setError('All fields are required');
+      setSuccess('');
+      return;
+    }
+
+    const existingData = JSON.parse(localStorage.getItem('users') || '[]');
+    const newData = [...existingData, form];
+    localStorage.setItem('users', JSON.stringify(newData));
+
+    // Save as Excel
+    const worksheet = XLSX.utils.json_to_sheet(newData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+    XLSX.writeFile(workbook, 'users.xlsx');
+
+    setSuccess('Registered successfully!');
+    setError('');
+    setForm({
+      name: '', email: '', password: '',
+      phone: '', city: '', state: '', country: ''
+    });
+
+    setTimeout(() => navigate('/login'), 1500);
+  };
+
+  return (
+    <motion.div className="login-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Register</h2>
+
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
+
+        <div className="password-field">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <span onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={form.phone}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="city"
+          placeholder="City"
+          value={form.city}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="state"
+          placeholder="State"
+          value={form.state}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="country"
+          placeholder="Country"
+          value={form.country}
+          onChange={handleChange}
+          required
+        />
+
+        {error && <p className="status-message error">{error}</p>}
+        {success && <p className="status-message success">{success}</p>}
+
+        <button type="submit" className="login-btn">Register</button>
+        <button
+          type="button"
+          className="register-btn"
+          onClick={() => navigate('/login')}
+        >
+          Back to Login
+        </button>
+      </form>
+    </motion.div>
+  );
+};
+
+export default Register;
